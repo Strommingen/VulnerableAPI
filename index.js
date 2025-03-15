@@ -83,6 +83,7 @@ const verifyToken = (req,res,next) =>{
 app.post('/login', async(req,res,next) =>{
     try{
         const {username, password} = req.body;
+        
         if (!username || !password){
             const error = new Error('Invalid or missing credentials');
             error.status=400;
@@ -98,7 +99,7 @@ app.post('/login', async(req,res,next) =>{
 
         const user = rows[0];
 
-        if (username === user.username && password === user.password){
+        if (username === user.username && bcrypt.compareSync(password,user.password)){
             const token = jwt.sign({userName: username, userId: rows[0].user_id}, jwtKey, {expiresIn:'1h'});
             return res.json({token});
         } else{
