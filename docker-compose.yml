@@ -1,11 +1,11 @@
 services:
   app:
-    build: .
+    build: ./nodeapp
     ports:
       - 3000:3000
     volumes: 
-      - .:/app
-      - '/app/node_modules'
+      - ./nodeapp/:/app
+      - /app/node_modules
     depends_on:
       - mysql_server
 
@@ -17,4 +17,4 @@ services:
       - MYSQL_USER=lorem
       - MYSQL_PASSWORD=secret
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./mysql_init/init.sql:/docker-entrypoint-initdb.d/init.sql
