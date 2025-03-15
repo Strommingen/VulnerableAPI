@@ -1,0 +1,20 @@
+services:
+  app:
+    build: .
+    ports:
+      - 3000:3000
+    volumes: 
+      - .:/app
+      - '/app/node_modules'
+    depends_on:
+      - mysql_server
+
+  mysql_server:
+    image: mysql:8.4.4
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=vdb
+      - MYSQL_USER=lorem
+      - MYSQL_PASSWORD=secret
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql

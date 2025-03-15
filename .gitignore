@@ -1,0 +1,7 @@
+# Ignore dependencies (users should install them)
+node_modules/
+npm-debug.log
+
+# Ignore Docker volumes & build artifacts
+mysql_data/
+dist/
