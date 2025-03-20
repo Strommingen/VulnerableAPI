@@ -58,7 +58,7 @@ const verifyToken = (req,res,next) =>{
             error.status=403;
             throw error;
         }
-        const verified = jwt.verify(token, jwtKey);
+        const verified = jwt.decode(token, jwtKey);
         req.user = verified;
         
         next();

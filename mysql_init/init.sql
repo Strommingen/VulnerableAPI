@@ -17,7 +17,6 @@ create table if not exists Tasks(
 
 insert into Users (user_id, username, password) values (1,'admin', '$2a$10$OZ4pInlYooTQ2gnWhILYPOWZ6XNEJuMtKAk2BrXAYZuUdid3m0n0S'); -- admin veryS0t40ngPasforA8mi-n
 insert into Users (user_id,username, password) values (2,'kalle', '$2a$10$XBp4EFXOgvuGq4kZ5d/7qOR7dDz9CbcN8xwprCOmvqXupMnFnP13m'); -- kalle, lassie
-insert into Users (user_id,username, password) values (3,'hacker', '$2a$10$K16.m5GJ5EbtSfE.3FBCuugG36APFv8GowNF0tITU/Vj9F.YmXsk2'); -- hacker vulnerable
 
 insert into Tasks (task_name,description,status,user_id) values ("Hashing","Add functionality to hash passwords","completed","1");
 
