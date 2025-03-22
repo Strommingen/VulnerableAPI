@@ -3,6 +3,7 @@ const rateLimit = require('express-rate-limit')
 const bcrypt = require('bcryptjs')
 const db = require('./db');
 const app = express();
+const path = require('path');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -78,6 +79,10 @@ const verifyToken = (req,res,next) =>{
 }
 
 // endpoints
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'login.html'));
+});
+
 
 // login with JWT
 app.post('/login', async(req,res,next) =>{
@@ -99,7 +104,7 @@ app.post('/login', async(req,res,next) =>{
 
         const user = rows[0];
 
-        if (username === user.username && bcrypt.compareSync(password,user.password)){
+        if (bcrypt.compareSync(password,user.password)){
             const token = jwt.sign({userName: username, userId: rows[0].user_id}, jwtKey, {expiresIn:'1h'});
             return res.json({token});
         } else{
