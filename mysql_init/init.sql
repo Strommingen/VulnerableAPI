@@ -15,8 +15,8 @@ create table if not exists Tasks(
     user_id integer not null, foreign key (user_id) references Users(user_id)
 );
 
-insert into Users (user_id, username, password) values (1,'admin', '$2a$10$OZ4pInlYooTQ2gnWhILYPOWZ6XNEJuMtKAk2BrXAYZuUdid3m0n0S'); -- admin veryS0t40ngPasforA8mi-n
-insert into Users (user_id,username, password) values (2,'kalle', '$2a$10$XBp4EFXOgvuGq4kZ5d/7qOR7dDz9CbcN8xwprCOmvqXupMnFnP13m'); -- kalle, lassie
+insert into Users (user_id, username, password) values (1,'admin', '$2a$10$OZ4pInlYooTQ2gnWhILYPOWZ6XNEJuMtKAk2BrXAYZuUdid3m0n0S');
+insert into Users (user_id,username, password) values (2,'kalle', '$2a$10$XBp4EFXOgvuGq4kZ5d/7qOR7dDz9CbcN8xwprCOmvqXupMnFnP13m');
 
 insert into Tasks (task_name,description,status,user_id) values ("Hashing","Add functionality to hash passwords","completed","1");
 
