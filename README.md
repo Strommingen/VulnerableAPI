@@ -227,9 +227,17 @@ Another way is to use Burp Suite with the JWT Editor extension. A POST request t
 
 Get a valid JWT by filling out the form with a proxy browser connected to Burp Suite.
 
+Enter the `JWT Editor` tab select `New Symmetric Key`, check the `Specify secret:` button and enter the JWT secret you cracked in a previous question. Now hit generate to generate a new key and then `OK`.
+
 Now make a request to the `/tasks` endpoint via the proxy browser. Enter the `Poxy > HTTP history` tab and send the GET request to the repeater. Enter the repeater tab and then to `Request > JSON Web Token`.
 
-Change the *userId* value in the payload to 1.
+Change the *userId* value in the payload to *1* and the *userName* to *admin*.
+
+Click the `Sign` button and select the key you created and then `OK`.
+
+Now you can send the request and you should get the admins tasks in the response panel.
+
+This method is redundant if the previous works but if the API actually uses the `verify()` method it will still work. Feel free to edit the code and rebuild the compose file to try it. Use a CTRL + F search for `decode` and you should find it, change it to `verify` instead, nothing else needs to be edited.
 
 </details>
 
@@ -256,3 +264,5 @@ Consider question 1 the poorly implemented rate limiter and in question 4 the JW
 The brute force attack can be mitigated by applying the rate limiter to the `/` endpoint instead of the unused `/api/`, or even the `/login` endpoint. This mistake was present before I decided to make this old project into this kind of lab. 
 
 Now the verification for the JWT is faulty, it only decodes the JWT and not verifying it. This can be prevented by using the *correct* methods. Reading documentation is important and would probably prevent this mistake. This API uses `decode()` when it should be using `verify()`.
+
+Using strong keys are also important as the *A4.2* question showed. That method works even if the API uses `verify()` and not `decode()`. And it only worked because the JWT secret was weak and vulnerable to dictionary attacks.
