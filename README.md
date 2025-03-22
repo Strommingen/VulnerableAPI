@@ -3,6 +3,7 @@
 ```
 Author: Gustaf Nordlander
 ```
+
 ## Goal
 
 The goal of this lab is to examine and perform some techniques and topics relating to APIs and JWTs.
@@ -45,6 +46,7 @@ Even if you manage to update the repository before anyone else has time to steal
 GitHub also has a search feature with search operators. This can be used like with Google Dorking to find these secrets like API keys. 
 
 - [More information on GitHub Dorking](https://medium.com/@pawan_rawat/github-recon-for-finding-sensitive-information-aecdeb9c9dce)
+
 ## JWT Structure
 
 JSON Web Tokens is a standard for transmitting, in a secure way, information between two parties. It is used to authenticate and validate users. It is also used to ensure safe communication between clients and servers. The information is verifiable because the token is signed by an algorithm like the HMAC or RSA algorithms. It is a common practice to use JWTs in APIs.
@@ -86,6 +88,7 @@ The endpoints available:
 - `/tasks/:id` - DELETEs a task with that ID.
 
 You can interact with the API using whatever method you prefer like cURL or [Postman](https://www.postman.com/downloads/) as there is currently no HTML or CSS implemented apart from the login page, it is only a JS API.
+
 #### Q1: What tasks does the user kalle have to complete?
 
 Note that you are meant to brute force the users password and then interact with the API to retrieve the tasks.
@@ -97,6 +100,7 @@ Hints:
 - The response parameter that is interesting to us is `Cookies`
 
 ##### Solution
+
 <details>
 	<summary>Click to reveal the solution</summary>
 	
@@ -140,6 +144,7 @@ Now it is possible to interact as `kalle` with the API and make CRUD operations 
 In Postman make a GET request to the endpoint `/tasks` including the header with the key: `Cookie` and value: jwt=JWT.
 	
 </details>
+
 ## Getting past the JWT
 ### Cracking the JWT
 
@@ -171,6 +176,7 @@ echo "base64 payload" | base64 -d
 The parameters are: userName, userId, iat, exp.
 
 </details>
+
 ### Signing the JWT
 
 In order for JWTs to be effective, proper implementation is required. If a developer does not follow best practices and proper implementation the API can be vulnerable to some vulnerabilities. For instance the signing of the JWT is very important and it then follows that the verification of the JWT is as important. 
@@ -198,6 +204,7 @@ echo "base64 payload" | base64 -d
 The parameters are: userName, userId, iat, exp.
 
 </details>
+
 #### Q4: Describe the two ways to get around the JWT verification
 
 Hint:
@@ -212,6 +219,7 @@ Hint:
 Since you should have a valid JWT at this point and knowledge of the payload values you can change the userId value in the payload to what the admin is using. The userId value is the only value that needs to change since that is what the API uses to authorize the user. When the payload is changed we can generate a new payload with a tool like  [jwt.io](https://jwt.io/) to get the proper formatting. Then we can copy the new payload section of this generated JWT and replace the previous payload with it.
 
 This is caused by the improper implementation of the verification of the JWT. It does not actually verify it, it just decodes it.
+
 ##### A4.2
 The other way is to use the secret key used to sign the JWT that we cracked previously. We can again use the tool [jwt.io](https://jwt.io/) but this time we can sign the JWT and use the whole JWT instead of just the payload. This is because the JWT secret key was weak enough to allow us to crack it.
 
@@ -224,6 +232,7 @@ Now make a request to the `/tasks` endpoint via the proxy browser. Enter the `Po
 Change the *userId* value in the payload to 1.
 
 </details>
+
 #### Q5: What tasks does user admin have to complete?
 
 Hint:
@@ -237,6 +246,7 @@ Hint:
 Since kalle is user 2, you can guess that the admin user is user 1. Use one of the methods from Q4. If you choose the first option to generate a JWT, you can use it in Postman in the header of a GET request to the `/tasks` endpoint.
 
 </details>
+
 ## Bonus question
 
 Consider question 1 the poorly implemented rate limiter and in question 4 the JWT verification was the vulnerabilities respectively, can you, by static analysis of the code spot why it was not effective in stopping your attack?
