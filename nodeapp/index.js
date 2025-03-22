@@ -1,6 +1,7 @@
 const express = require('express');
-const rateLimit = require('express-rate-limit')
-const bcrypt = require('bcryptjs')
+const rateLimit = require('express-rate-limit');
+const bcrypt = require('bcryptjs');
+const cookieParser = require('cookie-parser')
 const db = require('./db');
 const app = express();
 const path = require('path');
@@ -49,10 +50,12 @@ async function verifyUser(taskId, userId) { // verify that the task is assigned 
     }
 }
 
+app.use(cookieParser());
 // token verfification
 const verifyToken = (req,res,next) =>{
     try{
-        const token = req.headers['authorization'];
+        const token = req.cookies.jwt;
+        // const token = req.headers['authorization'];
 
         if(!token){
             const error = new Error('Access Denied');
@@ -106,7 +109,13 @@ app.post('/login', async(req,res,next) =>{
 
         if (bcrypt.compareSync(password,user.password)){
             const token = jwt.sign({userName: username, userId: rows[0].user_id}, jwtKey, {expiresIn:'1h'});
-            return res.json({token});
+            res.cookie('jwt', token, {
+                httpOnly:true,
+                sameSite:'strict',
+                maxAge:3600000 // 1h
+            });
+            return res.status(200).json({message: "Login successfull"});
+            //return res.json({token});
         } else{
             const error = new Error('Unauthorized');
             error.status=401;
