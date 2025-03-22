@@ -23,3 +23,6 @@ for ($i = 0; $i -lt $passwords.Length; $i++) {
 }
 
 # use this script like: ./jwtBrute.ps1 "\path\to\wordlist" "username"
+
+# the script brute forces the login page until it enters the correct password and retrieves the token
+# the output will be: password : jwt
