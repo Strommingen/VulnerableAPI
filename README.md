@@ -1,9 +1,5 @@
 # Vulnerable API
 
-```
-Author: Gustaf Nordlander
-```
-
 ## Goal
 
 The goal of this lab is to examine and perform some techniques and topics relating to APIs and JWTs.
@@ -14,7 +10,6 @@ This is a REST API that allows registered users to make CRUD operations on a dat
 
 The endpoints of this API will be explained during the lab.
 
-The lab environment can be found at my [GitHub](https://github.com/Strommingen/VulnerableAPI).
 The API is run in a container, to run the container, run the command `docker compose up` and wait for a minute. It should now be available on `localhost:3000`.
 
 Install JWT editor extension on Burp Suite.
